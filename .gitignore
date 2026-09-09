@@ -1,0 +1,19 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Django database
+db.sqlite3
+db.sqlite3-journal
+
+# Static files (if collected)
+staticfiles/
+
+# Local env files
+.env
