@@ -99,3 +99,34 @@ jobs:
             docker run -d --name django-app -p 80:8000 \
               -e SECRET_KEY='${{ secrets.DJANGO_SECRET_KEY }}' \
               ghcr.io/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
+  notify-success:
+    needs: deploy
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Send success email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "✅ Deploy Success: ${{ github.repository }}"
+          to: ${{ secrets.NOTIFY_EMAIL }}
+          from: GitHub Actions
+          body: "Deployment succeeded for commit ${{ github.sha }} on ${{ github.ref }}."
+  notify-failure:
+    needs: [build-test, sast-scan, dependency-scan, docker-build-scan-push, deploy]
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+       - uses: dawidd6/action-send-mail@v3
+         with:
+           server_address: smtp.gmail.com
+           server_port: 465
+           username: ${{ secrets.GMAIL_USERNAME }}
+           password: ${{ secrets.GMAIL_APP_PASSWORD }}
+           subject: "❌ Deploy Failed: ${{ github.repository }}"
+           to: ${{ secrets.NOTIFY_EMAIL }}
+           from: GitHub Actions
+           body: "Pipeline failed for commit ${{ github.sha }} on ${{ github.ref }}."      
