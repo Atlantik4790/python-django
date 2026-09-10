@@ -82,5 +82,5 @@ Everything below is **your job** - none of it is included here on purpose. Build
 - [ ] **Configure (M16)** - Provision the server with **Ansible** (install Python, deps, run gunicorn under systemd).
 - [ ] **Kubernetes (M18/M19)** - Deployment + Service + Ingress; use `/health` as your liveness/readiness probe; scale it.
 - [ ] **Cloud (M20/M21)** - Live on **AWS** (EC2 + RDS), then provision it all with **Terraform**.
-
+- [ ] ** Deployment Update(Gunicorn)** - Gunicorn dependency added for production deployment.
 > 🚫 No `Dockerfile`, `Jenkinsfile`, compose, k8s YAML, or Terraform is included - that's the whole point. You already learned how on TaskBoard. Now prove you can do it on a stack you've never seen.
