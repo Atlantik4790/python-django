@@ -96,5 +96,4 @@ jobs:
             docker rm django-app || true
             docker run -d --name django-app -p 80:8000 \
               -e SECRET_KEY='${{ secrets.DJANGO_SECRET_KEY }}' \
-              -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
               ghcr.io/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
